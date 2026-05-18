@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AK Performance Manual v1.0.3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Noto+Sans+TC:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#edf3f7;--bg2:#e2edf3;--bg3:#d4e3eb;--sidebar:#0f2230;--topbar:#081823;--border:rgba(30,70,95,.18);--border2:rgba(30,70,95,.32);--text:#071621;--text2:#203747;--text3:#5b7380;--text-inv:#edf3f7;--accent:#176d8f;--accent-h:#1f92bd;--blue:#155fa0;--green:#247a55;--gold:#aa7800;--purple:#7253a7;--red:#b64034;--shadow:0 2px 12px rgba(20,50,70,.12);--radius:10px;--radius2:6px}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC',sans-serif;min-height:100vh;font-size:14px;line-height:1.65}body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='360' height='360'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='360' height='360' filter='url(%23n)' opacity='0.032'/%3E%3C/svg%3E");pointer-events:none;z-index:0}.shell{display:grid;grid-template-columns:245px 1fr;grid-template-rows:54px 1fr;min-height:100vh;position:relative;z-index:1}.topbar{grid-column:1/-1;display:flex;align-items:center;padding:0 20px;background:var(--topbar);border-bottom:2px solid var(--accent);gap:12px;position:sticky;top:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.25)}.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:15px;color:#d8f2ff;letter-spacing:-.3px;white-space:nowrap}.logo span{color:#85c7e5;font-weight:400}.v-badge{font-family:'JetBrains Mono',monospace;font-size:10px;background:var(--accent);color:#fff;padding:2px 8px;border-radius:20px;font-weight:700}.topbar-right{margin-left:auto;display:flex;gap:8px;align-items:center}.print-btn{padding:5px 14px;border:1px solid rgba(255,255,255,.25);border-radius:20px;background:transparent;color:#b7d9e8;font-size:12px;cursor:pointer;font-family:'Syne',sans-serif;font-weight:600;transition:all .18s}.print-btn:hover{background:rgba(255,255,255,.1);color:#fff}.sidebar{background:var(--sidebar);border-right:2px solid rgba(23,109,143,.35);padding:20px 0;overflow-y:auto;position:sticky;top:54px;height:calc(100vh - 54px)}.sb-label{font-family:'JetBrains Mono',monospace;font-size:9px;color:#8dc5dd;letter-spacing:2px;text-transform:uppercase;padding:0 16px;margin:16px 0 6px;display:block}.sb-label:first-child{margin-top:0}.nav-btn{display:flex;align-items:center;gap:8px;width:100%;padding:9px 16px;background:none;border:1px solid transparent;border-radius:0;color:#d6ebf4;font-family:'Noto Sans TC',sans-serif;font-size:13px;cursor:pointer;text-align:left;transition:all .15s}.nav-btn:hover{background:rgba(237,243,247,.1);color:#fff}.nav-btn.active{background:rgba(23,109,143,.24);border-left:3px solid var(--accent);color:#9ee0ff;padding-left:13px}.nav-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0}.main{padding:24px 28px;overflow-y:auto;max-width:100%}.page{display:none}.page.active{display:block}.page-title{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:var(--text);margin-bottom:4px;display:flex;align-items:center;gap:10px}.page-sub{font-size:12px;color:var(--text3);margin-bottom:20px;font-family:'JetBrains Mono',monospace}.badge{display:inline-flex;align-items:center;gap:3px;font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:1px 7px;border-radius:10px;white-space:nowrap}.badge-official{background:rgba(21,95,160,.12);color:var(--blue);border:1px solid rgba(21,95,160,.35)}.badge-high{background:rgba(170,120,0,.12);color:var(--gold);border:1px solid rgba(170,120,0,.35)}.badge-inf{background:rgba(114,83,167,.1);color:var(--purple);border:1px solid rgba(114,83,167,.3)}.badge-exp{background:rgba(36,122,85,.12);color:var(--green);border:1px solid rgba(36,122,85,.35)}.badge-bad{background:rgba(182,64,52,.1);color:var(--red);border:1px solid rgba(182,64,52,.35)}.card{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--radius);margin-bottom:12px;overflow:hidden;box-shadow:var(--shadow)}.card-head{display:flex;align-items:center;gap:10px;padding:12px 16px;cursor:pointer;user-select:none;transition:background .15s}.card-head:hover{background:var(--bg3)}.card-head h3{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;flex:1}.card-toggle{font-size:12px;color:var(--text3);transition:transform .2s;flex-shrink:0}.card.open .card-toggle{transform:rotate(180deg)}.card-body{display:none;padding:0 16px 16px;border-top:1px solid var(--border)}.card.open .card-body{display:block}.tbl-wrap{overflow-x:auto;margin:12px 0}table{width:100%;border-collapse:collapse;font-size:13px}th{background:var(--sidebar);color:#d8f2ff;font-family:'Syne',sans-serif;font-weight:700;font-size:12px;padding:8px 12px;text-align:left;white-space:nowrap}td{padding:8px 12px;border-bottom:1px solid var(--border);vertical-align:top}tr:last-child td{border-bottom:none}tr:nth-child(even) td{background:rgba(30,70,95,.04)}.callout{padding:10px 14px;border-radius:var(--radius2);font-size:13px;margin:10px 0;border-left:3px solid}.callout-warn{background:rgba(182,64,52,.07);border-color:var(--red);color:var(--text)}.callout-info{background:rgba(21,95,160,.07);border-color:var(--blue);color:var(--text)}.callout-ok{background:rgba(36,122,85,.07);border-color:var(--green);color:var(--text)}.callout-gold{background:rgba(170,120,0,.08);border-color:var(--gold);color:var(--text)}.callout b{font-weight:700}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin:12px 0}.mini{background:var(--bg);border:1px solid var(--border);border-radius:var(--radius2);padding:12px 14px}.mini h4{font-family:'Syne',sans-serif;font-size:13px;margin-bottom:6px}.mini p{font-size:12px;color:var(--text2)}.code{font-family:'JetBrains Mono',monospace;background:rgba(10,30,45,.07);border:1px solid var(--border);border-radius:var(--radius2);padding:9px 10px;font-size:12px;white-space:pre-wrap;color:var(--text2);margin:8px 0}.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0}.field-help{font-size:11px;color:var(--text3);line-height:1.5;margin-top:4px}.field-help b{color:var(--text2)}.explain{background:rgba(255,255,255,.34);border:1px dashed var(--border2);border-radius:var(--radius2);padding:10px 12px;margin:10px 0;font-size:12px;color:var(--text2)}.term{border-bottom:1px dotted var(--accent);cursor:help}.table-purpose{font-size:12px;color:var(--text2);background:rgba(21,95,160,.06);border-left:3px solid var(--accent);padding:8px 10px;border-radius:var(--radius2);margin:8px 0}label{font-size:12px;color:var(--text3);display:block;margin-bottom:4px}select,input,textarea{width:100%;border:1px solid var(--border2);border-radius:var(--radius2);background:var(--bg);color:var(--text);padding:8px 10px;font-family:'Noto Sans TC',sans-serif;font-size:13px}textarea{min-height:95px;resize:vertical}.btn{border:1px solid var(--border2);background:var(--sidebar);color:#d8f2ff;border-radius:20px;padding:7px 16px;cursor:pointer;font-weight:700;font-size:12px;margin-right:6px;transition:.15s}.btn:hover{background:var(--accent);color:#fff}.result{border:1px solid var(--border);background:var(--bg);border-radius:var(--radius2);padding:12px;margin-top:10px}.result.pass{border-color:rgba(36,122,85,.45);background:rgba(36,122,85,.07)}.result.fail{border-color:rgba(182,64,52,.5);background:rgba(182,64,52,.07)}.result.warn{border-color:rgba(170,120,0,.5);background:rgba(170,120,0,.08)}.pill{display:inline-flex;border-radius:20px;padding:2px 9px;font-size:11px;font-weight:700;margin:2px 4px 2px 0}.pill-red{background:rgba(182,64,52,.14);color:var(--red)}.pill-gold{background:rgba(170,120,0,.15);color:var(--gold)}.pill-green{background:rgba(36,122,85,.14);color:var(--green)}.pill-blue{background:rgba(21,95,160,.14);color:var(--blue)}.pill-purple{background:rgba(114,83,167,.14);color:var(--purple)}.sep{height:1px;background:var(--border);margin:16px 0}.small{font-size:12px;color:var(--text3)}ul{margin-left:18px}li{margin:3px 0}.flow{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}.step{background:var(--bg);border:1px solid var(--border2);border-radius:999px;padding:8px 12px;font-size:12px;font-weight:700}.arrow{color:var(--text3)}@media(max-width:820px){.shell{display:block}.topbar{position:relative}.sidebar{position:relative;top:auto;height:auto}.main{padding:18px}.form-row{grid-template-columns:1fr}}@media print{.sidebar,.topbar,.print-btn,.btn{display:none!important}.shell{display:block}.main{padding:0}.page{display:block!important}.card-body{display:block!important}.card-toggle{display:none}.card{box-shadow:none;border:1px solid #ccc;break-inside:avoid}.page-title{page-break-before:always}.page-title:first-child{page-break-before:auto}body::before{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="topbar">
+  <div class="logo">AK <span>Performance</span> Manual</div>
+  <span class="v-badge">v1.0.3｜主工具入口版</span>
+  <div class="topbar-right"><button class="print-btn" onclick="window.print()">🖨 列印 / PDF</button></div>
+</header>
+<nav class="sidebar">
+  <span class="sb-label">工具模式</span>
+  <button class="nav-btn active" onclick="nav('diagnose')" id="nb-diagnose"><span class="nav-icon">📊</span>主工具｜數據診斷器</button>
+  <button class="nav-btn" onclick="nav('quick')" id="nb-quick"><span class="nav-icon">⚡</span>速查裁決</button>
+  <span class="sb-label">核心章節</span>
+  <button class="nav-btn" onclick="nav('sources')" id="nb-sources"><span class="nav-icon">🧾</span>來源與可信度</button>
+  <button class="nav-btn" onclick="nav('meta')" id="nb-meta"><span class="nav-icon">🔄</span>Meta 2026 指標</button>
+  <button class="nav-btn" onclick="nav('metrics')" id="nb-metrics"><span class="nav-icon">🎛</span>三平台指標</button>
+  <button class="nav-btn" onclick="nav('matrix')" id="nb-matrix"><span class="nav-icon">🧮</span>CTR × Retention</button>
+  <button class="nav-btn" onclick="nav('loop')" id="nb-loop"><span class="nav-icon">🔁</span>4D 優化循環</button>
+  <button class="nav-btn" onclick="nav('cta')" id="nb-cta"><span class="nav-icon">🎯</span>CTA Post-check</button>
+  <button class="nav-btn" onclick="nav('history')" id="nb-history"><span class="nav-icon">🗂</span>history_tracking v1.2</button>
+  <button class="nav-btn" onclick="nav('timing')" id="nb-timing"><span class="nav-icon">⏱</span>Review 節奏</button>
+  <button class="nav-btn" onclick="nav('teaching')" id="nb-teaching"><span class="nav-icon">🎓</span>教學驗收</button>
+  <button class="nav-btn" onclick="nav('toolmap')" id="nb-toolmap"><span class="nav-icon">🧩</span>工具對接</button>
+  <button class="nav-btn" onclick="nav('glossary')" id="nb-glossary"><span class="nav-icon">📘</span>名詞快查</button>
+  <span class="sb-label">關於</span>
+  <button class="nav-btn" onclick="nav('about')" id="nb-about"><span class="nav-icon">📋</span>版本裁決</button>
+</nav>
+<main class="main">
+
+<section class="page active" id="page-diagnose">
+  <div class="page-title">📊 主工具｜Performance 數據診斷器</div>
+  <div class="page-sub">80% 的日常使用都在這一頁：輸入少量數據 → 產生診斷 → 決定下一支影片改什麼</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>先看這裡｜這個工具怎麼用？</h3><span class="card-toggle">▼</span></div><div class="card-body">
+    <div class="callout callout-ok"><b>主工具定位：</b>Performance Manual 不是要你從頭讀到尾。日常使用時，先用「數據診斷器」；其他頁面是查表、名詞解釋與進階參考。</div>
+    <div class="grid">
+      <div class="mini"><h4>Step 1｜選平台與目標</h4><p>先選 YouTube / Instagram / Facebook，再選這支內容的任務：曝光、信任、教學、私訊或轉化。</p></div>
+      <div class="mini"><h4>Step 2｜填最少 3 個數字</h4><p>優先填入口數字（CTR / Stop Rate）、留存數字（Retention / APV）、轉化數字（DM / 點擊 / 報名）。沒有的欄位先留空。</p></div>
+      <div class="mini"><h4>Step 3｜看下一步決策</h4><p>診斷結果會告訴你優先修 Hook、Script、CTA、Trust、Offer，或先檢查 Paid / Organic 是否分開。</p></div>
+    </div>
+    <div class="callout callout-info"><b>其他頁面怎麼用：</b>Meta 2026、三平台指標、四象限、history_tracking 都是「需要時再查」。不要一開始就被全部名詞淹沒。</div>
+  </div></div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>輸入核心數據｜不知道就留空，不要亂猜</h3><span class="card-toggle">▼</span></div><div class="card-body">
+    <div class="explain"><b>這個表單的用意：</b>不用一次填完整後台所有數字。先填「入口、留存、受眾、轉化」四類核心數據，工具會把數據翻成一句可執行的修改建議：下一支先修 Hook、Script、CTA、Offer，還是受眾定位。</div>
+    <div class="callout callout-info"><b>先看這裡｜填寫邏輯：</b>沒有每個數字也可以用。你只要填得出 3 個欄位：①入口數字（CTR 或 Stop Rate）②留存數字（Retention / APV）③轉化數字（DM / 點擊 / 報名），就能先做第一輪診斷。沒有的欄位先留空，不要亂猜。</div>
+    <div class="grid">
+      <div class="mini"><h4>最小填法 A｜YouTube</h4><p>填 CTR、Retention/APV、Viewers 或 Views、DM/點擊。CTR 在 Studio → Analytics → Reach。</p></div>
+      <div class="mini"><h4>最小填法 B｜IG / FB Reels</h4><p>沒有 CTR 沒關係。填 Retention 或平均觀看比例、Viewers/Views、Interactions、DM 或 Profile visits。</p></div>
+      <div class="mini"><h4>最小填法 C｜剛開始沒數據</h4><p>只填你有的數字。沒有就留空。第一輪目標是建立記錄習慣，不是做精密統計。</p></div>
+    </div>
+    <div class="card open" style="box-shadow:none;margin:10px 0;background:rgba(255,255,255,.24)"><div class="card-head" onclick="toggleCard(this)"><h3>欄位怎麼填？去哪裡找？</h3><span class="card-toggle">▼</span></div><div class="card-body">
+      <div class="tbl-wrap"><table><tr><th>欄位</th><th>你要填什麼</th><th>YouTube 到哪裡找</th><th>IG / FB 到哪裡找</th><th>沒有數字時怎麼辦</th></tr>
+      <tr><td>CTR / Stop Rate（%）</td><td>YouTube 填 CTR；短影音填「前幾秒停下來的人比例」或用你後台最接近的入口數字。</td><td>Studio → Analytics → Reach → Impressions CTR</td><td>Reels 通常沒有官方 CTR；可用前 3 秒留存、播放開始率或暫時留空。</td><td>沒有就留空，先靠 Retention + Viewers + DM 判斷。</td></tr>
+      <tr><td>Retention / APV（%）</td><td>平均觀看比例。例：影片 60 秒，平均看 30 秒，約 50%。</td><td>Studio → Engagement → Audience retention / Average percentage viewed</td><td>Insights / 專業儀表板裡找平均觀看時間、觀看比例或留存曲線。</td><td>沒有百分比時，用平均觀看秒數 ÷ 影片長度 × 100 粗估。</td></tr>
+      <tr><td>Viewers（不重複觀眾）</td><td>看過這支內容的不同帳號數。</td><td>YouTube 可先用 Views 近似，但要知道它不是不重複觀眾。</td><td>Meta 2026 後看 Viewers；舊介面可能叫 Reach / Accounts Reached。</td><td>只有 Views 時也可先填 Views，但診斷會比較粗。</td></tr>
+      <tr><td>DM Count / 轉化動作</td><td>因這支內容帶來的私訊、點擊、報名、購買、索取表單。</td><td>通常要自己記錄：連結點擊、留言後私訊、表單填寫。</td><td>DM、Profile visits、Link clicks、私訊關鍵字觸發次數。</td><td>沒有追蹤就填 0，並在下一支開始記錄。</td></tr>
+      <tr><td>Paid 是否有投放？</td><td>這支內容有沒有用廣告推。</td><td>看是否有 YouTube Ads / Promotion。</td><td>Meta Business Suite Insights 概覽多為 Organic；Paid 要到 Ads Manager / Page Insights 查。</td><td>不確定時選「有 Paid，需分開看」，避免誤判。</td></tr>
+      </table></div>
+      <div class="callout callout-warn"><b>重要：</b>數據診斷不是越精密越好。第一輪只要能回答：「有沒有人點進來 / 有沒有留下來 / 有沒有走下一步」就夠了。</div>
+    </div></div>
+    <div class="form-row"><div><label>平台</label><select id="diagPlatform"><option value="youtube">YouTube</option><option value="instagram">Instagram</option><option value="facebook">Facebook</option></select><div class="field-help"><b>用意：</b>不同平台數字名稱不同；YouTube 看 CTR / Retention，Meta 2026 後看 Viewers / Views / Interactions。</div></div><div><label>內容目標</label><select id="diagGoal"><option value="exposure">曝光</option><option value="trust">信任</option><option value="education">教學</option><option value="dm">私訊</option><option value="conversion">轉化</option></select><div class="field-help"><b>用意：</b>先知道這支影片要解決什麼任務。曝光片不一定要立刻成交；轉化片則必須看 DM / Offer。</div></div></div>
+    <div class="form-row"><div><label>入口數字｜CTR / Stop Rate（%）</label><input id="diagCtr" type="number" step="0.1" placeholder="例如 4.5"><div class="field-help"><b>白話：</b>入口吸引力。YouTube CTR 是看到縮圖/標題後點進來的比例；短影音 Stop Rate 是前 1–3 秒有沒有停下來。<b>用意：</b>判斷 Hook、標題、縮圖、前幾秒是否吸引人。</div></div><div><label>留存數字｜Retention / APV（%）</label><input id="diagRetention" type="number" step="0.1" placeholder="例如 38"><div class="field-help"><b>白話：</b>觀眾平均看了影片多少比例。APV = Average Percentage Viewed。<b>用意：</b>判斷腳本節奏、資訊密度、內容是否兌現承諾。</div></div></div>
+    <div class="form-row"><div><label>受眾數字｜Viewers（不重複觀眾）</label><input id="diagViewers" type="number" placeholder="例如 1200"><div class="field-help"><b>白話：</b>實際看過內容的不同帳號數；同一人看很多次仍算 1。<b>用意：</b>判斷觸及到多少「人」，不是多少次播放。</div></div><div><label>轉化數字｜DM Count / 下一步動作</label><input id="diagDm" type="number" placeholder="例如 12"><div class="field-help"><b>白話：</b>因這支內容帶來的私訊、點擊、報名、購買等下一步行動。<b>用意：</b>判斷 CTA 和 Offer 是否真的把觀看變成關係或收入。</div></div></div>
+    <div class="form-row"><div><label>Paid 是否有投放？</label><select id="diagPaid"><option value="no">沒有 / 純 Organic</option><option value="yes">有 Paid，需分開看</option></select><div class="field-help"><b>用意：</b>有投廣告時，不要把買來的曝光誤判成自然內容成功。Paid 與 Organic 必須分開記。</div></div><div><label>是否有明顯 Not Interested / 負評？</label><select id="diagNeg"><option value="no">沒有明顯負向</option><option value="yes">有明顯負向</option></select><div class="field-help"><b>白話：</b>觀眾表示不想看、負面留言、跳出或大量不相關互動。<b>用意：</b>判斷是否受眾錯位或標題承諾過度。</div></div></div>
+    <button class="btn" onclick="diagnosePerformance()">產生診斷</button><button class="btn" onclick="fillDiag('good')">填入好範例</button><button class="btn" onclick="fillDiag('clickbait')">填入高 CTR 低留存</button>
+    <div id="diagResult" class="result" style="display:none"></div>
+  </div></div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>使用原則</h3><span class="card-toggle">▼</span></div><div class="card-body">
+    <div class="callout callout-ok"><b>Performance 的任務：</b>不是追逐觀看數，而是把發布後數據翻譯成下一支內容的修改決策。</div>
+    <div class="flow"><div class="step">Data 數據</div><div class="arrow">→</div><div class="step">Diagnosis 診斷</div><div class="arrow">→</div><div class="step">Decision 決策</div><div class="arrow">→</div><div class="step">Iteration 迭代</div></div>
+    <div class="callout callout-info"><b>看不懂名詞？</b>左側有「📘 名詞快查」。手機版請往下滑到選單，或直接列印 / PDF 時查看最後的名詞表。</div>
+  </div></div>
+</section>
+
+<section class="page" id="page-quick">
+  <div class="page-title">⚡ 參考｜速查裁決</div><div class="page-sub">主工具在「數據診斷器」；本頁用來查 Ch9 的核心定位與最小判讀原則</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>核心裁決</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="callout callout-info"><b>Ch9 = 發布後決策系統。</b>Algorithm Database v1.2 定義欄位、CTA v1.1 定義 cta_post_check、v6.5 History 保存結果；Performance 負責告訴你下一支影片要修哪裡。</div><div class="code">Data → Diagnosis → Decision → Iteration
+數據 → 診斷 → 決策 → 迭代</div></div></div>
+  <div class="grid"><div class="mini"><h4>不要只看 Views</h4><p>Views 是廣度，不是成功。必須搭配 Retention、Interactions、DM 或 Conversion。</p></div><div class="mini"><h4>CTR 不是越高越好</h4><p>高 CTR + 低 Retention 代表包裝吸引人但內容沒兌現，可能接近 clickbait。</p></div><div class="mini"><h4>Paid / Organic 分開</h4><p>Meta Business Suite Insights 概覽只顯示 Organic；Paid 需要到另一介面查。</p></div><div class="mini"><h4>一次只改一件事</h4><p>下一支影片只測 Hook / Script / CTA / Offer / Placement 的其中一項。</p></div></div>
+</section>
+
+<section class="page" id="page-sources">
+  <div class="page-title">🧾 Source Registry</div><div class="page-sub">官方來源、high confidence 與 practical inference 必須分開</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>來源可信度表</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="tbl-wrap"><table><tr><th>source_id</th><th>支持內容</th><th>來源</th><th>等級</th></tr><tr><td><code>yt_analytics_ctr_official</code></td><td>YouTube CTR 定義、2–10% 區間、Clickbait 判讀</td><td>YouTube Help answer/7628154</td><td><span class="badge badge-official">official</span></td></tr><tr><td><code>yt_analytics_ctr_context</code></td><td>CTR 下降不一定是問題；CTR 必須搭配 AVD 判讀</td><td>YouTube Help answer/16767369</td><td><span class="badge badge-official">official</span></td></tr><tr><td><code>yt_analytics_retention_official</code></td><td>Audience Retention、Spikes / Dips、Absolute vs Relative</td><td>YouTube Help answer/9314415</td><td><span class="badge badge-official">official</span></td></tr><tr><td><code>ig_insights_reach_official</code></td><td>Accounts Reached 與 Reels Views 舊制定義差異</td><td>Meta / Facebook Business Help</td><td><span class="badge badge-official">official</span></td></tr><tr><td><code>meta_suite_organic_only</code></td><td>Meta Business Suite Insights 概覽只顯示 Organic</td><td>Power My Analytics Support</td><td><span class="badge badge-high">high_confidence</span></td></tr><tr><td><code>meta_2026_reporting_changes</code></td><td>Reach→Viewers、Impressions→Views、Engagement→Interactions；FB 10 秒指標棄用</td><td>ExtraDigital 引用 Meta 官方資料</td><td><span class="badge badge-high">high_confidence</span></td></tr><tr><td><code>retention_benchmarks_2026</code></td><td>不同長度影片留存區間參考</td><td>Humble&Brag 自身頻道數據</td><td><span class="badge badge-inf">practical_inference</span></td></tr></table></div><div class="callout callout-warn"><b>裁決：</b><code>meta_2026_reporting_changes</code> 目前只能標 high_confidence。除非補到 Meta 官方原文，不得標為 official。</div></div></div>
+</section>
+
+<section class="page" id="page-meta">
+  <div class="page-title">🔄 Meta 2026 指標更新</div><div class="page-sub">避免用舊 Reach / Impressions / Engagement 做錯判斷</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>先看這張｜Meta 新指標白話說明</h3><span class="card-toggle">▼</span></div><div class="card-body">
+    <div class="explain"><b>這張表的用意：</b>先把 Meta 新名詞翻成白話。你不用先懂演算法，只要知道每個欄位回答哪個問題。</div>
+    <div class="tbl-wrap"><table><tr><th>新名詞</th><th>白話意思</th><th>這欄位用意</th><th>怎麼看</th><th>最常見誤讀</th></tr>
+    <tr><td><code>Viewers</code></td><td>不重複觀眾。同一個人看 5 次，仍算 1 個 viewer。</td><td>看這支內容實際碰到多少「人」。</td><td>Viewers 增加，代表受眾面擴大；但仍要搭配留存與互動。</td><td>不要跟 Views 混用；Viewers 不是播放次數。</td></tr>
+    <tr><td><code>Views</code></td><td>總播放 / 總觀看次數，可能包含同一人重複觀看。</td><td>看播放量、重播、擴散熱度。</td><td>Views 遠高於 Viewers，可能代表有人重看，也可能只是重複曝光。</td><td>Views 高不等於內容成功，也不等於有轉化。</td></tr>
+    <tr><td><code>Interactions</code></td><td>主動互動，例如按讚、留言、分享、收藏。</td><td>看觀眾是否願意做動作。</td><td>要看互動品質：真實留言、分享、收藏比「+1」有價值。</td><td>留言數多不等於好；機械式留言可能是風險。</td></tr>
+    <tr><td><code>Organic Viewers</code></td><td>自然流量帶來的不重複觀眾。</td><td>看內容本身是否有自然吸引力。</td><td>評估內容策略時優先看這個。</td><td>不要把 Paid 帶來的人也算進內容自然成功。</td></tr>
+    <tr><td><code>Paid Viewers</code></td><td>廣告帶來的不重複觀眾。</td><td>看投放是否有效。</td><td>用來評估廣告，不用來判斷自然演算法是否喜歡你。</td><td>Paid 成功不代表內容自然成功。</td></tr>
+    </table></div>
+    <div class="callout callout-info"><b>如何使用：</b>如果你只想知道「這支內容自然表現好不好」，先看 Organic Viewers + Retention + Interactions。若有廣告，Paid 數字要分開記。</div>
+  </div></div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>強制欄位替換</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="table-purpose"><b>這張表的用意：</b>避免你用舊名詞讀新後台。舊欄位不是單純改名字，部分計算口徑也不同，因此舊資料不能直接跟新資料硬比。</div><div class="tbl-wrap"><table><tr><th>舊欄位</th><th>新欄位</th><th>白話意思 / 這欄位用意</th><th>如何看</th><th>平台</th><th>狀態</th></tr><tr><td><code>organic_reach</code></td><td><code>organic_viewers</code></td><td>自然觸及的不重複觀眾。用來看內容自己被多少人看到。</td><td>拿來判斷自然內容吸引力，不要與 Paid 混算。</td><td>FB / IG</td><td>必須替換</td></tr><tr><td><code>paid_reach</code></td><td><code>paid_viewers</code></td><td>廣告帶來的不重複觀眾。用來看廣告投放規模。</td><td>只用來評估廣告效益，不代表自然演算法成功。</td><td>FB / IG</td><td>必須替換</td></tr><tr><td><code>page_feed_reach</code></td><td><code>page_feed_viewers</code></td><td>Facebook Feed 版位的不重複觀眾。</td><td>用來分辨是 Feed 有效，還是 Reels / 其他版位帶來流量。</td><td>FB</td><td>必須替換</td></tr><tr><td><code>engagement / engagements</code></td><td><code>interactions</code></td><td>主動互動：按讚、留言、分享、收藏等。</td><td>看互動品質，不只看總數；機械式留言不算好互動。</td><td>FB / IG</td><td>必須替換</td></tr><tr><td><code>sends_per_reach</code></td><td><code>sends_per_viewers</code></td><td>每位不重複觀眾帶來多少私訊分享。</td><td>越高代表內容越值得被轉傳，但目前屬 high_confidence / 實務觀察。</td><td>IG</td><td>必須替換</td></tr><tr><td>Facebook 10 秒影片指標</td><td>棄用，改看 <code>retention_rate + watch_time</code></td><td>不要再用「撐過 10 秒」判斷影片好壞。</td><td>改看留存曲線與總觀看時間，判斷觀眾是否真的願意看。</td><td>FB</td><td>必須刪除</td></tr></table></div></div></div>
+  <div class="card"><div class="card-head" onclick="toggleCard(this)"><h3>Paid / Organic 正確說法</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="explain"><b>這段的用意：</b>很多人看到 Business Suite 數字後，以為那就是全部流量。正確做法是先確認你看的介面是不是只含 Organic，若有投廣告，Paid 數字要另外去 Ads Manager / Page Insights 查。</div><div class="callout callout-warn"><b>不要寫：</b>Meta Business Suite 常把 Paid 和 Organic 混在一起。</div><div class="callout callout-ok"><b>正確寫法：</b>Meta Business Suite Insights 概覽只顯示 Organic 數字。Paid 數字不在這個介面，需要去 Ads Manager 或 Facebook Page Insights 等其他介面查看。</div></div></div>
+</section>
+
+<section class="page" id="page-metrics">
+  <div class="page-title">🎛 三平台核心指標</div><div class="page-sub">每個平台回答的問題不同，不可把指標名稱直接混用</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>YouTube</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="table-purpose"><b>這張表的用意：</b>YouTube 數據要分成「入口」與「內容」。CTR 看入口，Retention / AVD 看內容是否兌現承諾。</div><div class="tbl-wrap"><table><tr><th>指標</th><th>白話意思</th><th>這欄位用意</th><th>如何看</th><th>查找位置</th><th>等級</th></tr><tr><td>CTR / Impressions CTR</td><td>看到縮圖與標題後，有多少人點進來。</td><td>判斷標題、縮圖、選題包裝是否吸引人。</td><td>不可單看；要搭配 AVD / Retention。高 CTR 低留存可能是承諾沒兌現。</td><td>Studio → Analytics → Reach</td><td><span class="badge badge-official">official</span></td></tr><tr><td>AVD / APV</td><td>平均觀看時長 / 平均觀看比例。</td><td>判斷觀眾實際願意停留多久。</td><td>如果低，優先修 Script、節奏、資訊密度，而不是先怪 CTA。</td><td>Engagement</td><td><span class="badge badge-official">official</span></td></tr><tr><td>Audience Retention</td><td>留存曲線，包含重看高峰 Spikes 與離開 Dips。</td><td>找出哪一句、哪一段讓觀眾留下或離開。</td><td>Dips 對應腳本掉點；Spikes 可複製成未來高價值段落。</td><td>Engagement → Audience retention</td><td><span class="badge badge-official">official</span></td></tr><tr><td>RPM / CPM</td><td>創作者實拿收益 / 廣告主出價。</td><td>判斷內容類型的收益效率。</td><td>適合做月 / 季度檢查，不適合用單支短期波動下結論。</td><td>Revenue</td><td><span class="badge badge-inf">official / practical</span></td></tr></table></div></div></div>
+  <div class="card"><div class="card-head" onclick="toggleCard(this)"><h3>Instagram / Facebook</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="table-purpose"><b>這張表的用意：</b>Meta 指標要先分清「多少人看過、看了幾次、做了什麼動作、是否進入轉化」。不要把 Views 當成成功。</div><div class="tbl-wrap"><table><tr><th>指標</th><th>新制名稱</th><th>白話意思</th><th>這欄位用意 / 如何看</th><th>等級</th></tr><tr><td>不重複觀眾</td><td><code>viewers</code></td><td>有多少不同帳號看過。</td><td>看真實觸及人數。比 Views 更適合判斷受眾規模。</td><td><span class="badge badge-high">high_confidence</span></td></tr><tr><td>總觀看</td><td><code>views</code></td><td>總播放次數，可能包含同一人重複觀看。</td><td>看播放量與重播價值；Views 高但 Viewers 低，可能代表重看多或圈層窄。</td><td><span class="badge badge-high">high_confidence</span></td></tr><tr><td>主動互動</td><td><code>interactions</code></td><td>按讚、留言、分享、收藏等主動行為。</td><td>看內容是否讓人願意行動；注意留言品質，不要被「+1」灌水誤導。</td><td><span class="badge badge-high">high_confidence</span></td></tr><tr><td>私訊分享率</td><td><code>sends_per_viewers</code></td><td>每位不重複觀眾帶來多少私訊分享。</td><td>看內容是否值得轉傳給朋友；適合 IG / Reels 社交傳播判斷。</td><td><span class="badge badge-high">high_confidence</span></td></tr><tr><td>Profile visits / DM count</td><td><code>profile_visits / dm_count</code></td><td>進個人頁與私訊數。</td><td>看公域內容是否把人帶到下一步。這是轉化承接，不是官方推播權重。</td><td><span class="badge badge-inf">practical</span></td></tr></table></div></div></div>
+</section>
+
+<section class="page" id="page-matrix">
+  <div class="page-title">🧮 YouTube CTR × Retention 四象限</div><div class="page-sub">高 CTR 不等於好；低 CTR 也不一定壞</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>四象限判讀</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="tbl-wrap"><table><tr><th>組合</th><th>診斷</th><th>修正方向</th><th>claim</th></tr><tr><td>高 CTR + 高 Retention</td><td>包裝吸引人，內容兌現承諾</td><td>擴寫同類題材，複製結構</td><td>practical_inference</td></tr><tr><td>高 CTR + 低 Retention</td><td>包裝吸引人，但內容未兌現；可能接近 clickbait</td><td>修 Hook 與 Script 的承諾一致性</td><td>official + practical</td></tr><tr><td>低 CTR + 高 Retention</td><td>內容有價值，但標題 / 封面 / 主題包裝弱</td><td>優先優化標題、縮圖、前兩行描述</td><td>practical_inference</td></tr><tr><td>低 CTR + 低 Retention</td><td>選題與腳本雙重失敗</td><td>重新做 Signal / Strategy / Script</td><td>practical_inference</td></tr></table></div><div class="callout callout-info"><b>裁決：</b>真正要看的是「點進來的人是否願意留下來」。</div></div></div>
+</section>
+
+<section class="page" id="page-loop">
+  <div class="page-title">🔁 Data → Diagnosis → Decision → Iteration</div><div class="page-sub">Performance Review 的核心不是複盤，而是下一支影片的修改單</div>
+  <div class="grid"><div class="mini"><h4>Data｜數據</h4><p>收集 CTR / Stop Rate、Retention、Viewers、Interactions、DM、Revenue。</p></div><div class="mini"><h4>Diagnosis｜診斷</h4><p>把數據模式對應到 Hook、Script、CTA、Trust、Offer 或 Audience 問題。</p></div><div class="mini"><h4>Decision｜決策</h4><p>決定下一支只修哪一個變數。</p></div><div class="mini"><h4>Iteration｜迭代</h4><p>下一支影片只測一件事，不要同時亂改。</p></div></div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>診斷 → 決策對照</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="tbl-wrap"><table><tr><th>數據模式</th><th>優先診斷</th><th>決策</th></tr><tr><td>CTR 低</td><td>標題 / 縮圖 / 主題包裝</td><td>重寫入口承諾</td></tr><tr><td>Retention 低</td><td>Script 節奏、資訊密度、承諾未兌現</td><td>移除 Dips 段落或加快節奏</td></tr><tr><td>Views 高但 DM 低</td><td>CTA / Trust / Offer 問題</td><td>改 CTA 類型或重設引流品</td></tr><tr><td>Paid 高但 Organic 低</td><td>內容自然吸引力不足</td><td>分開讀數據，重測 Organic</td></tr><tr><td>Not interested 高</td><td>受眾錯位或包裝誤導</td><td>重做受眾與 Hook 承諾</td></tr></table></div></div></div>
+</section>
+
+<section class="page" id="page-cta">
+  <div class="page-title">🎯 CTA Post-check 整合</div><div class="page-sub">CTA 章的欄位，在 Ch9 變成發布後診斷入口</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>failure_diagnosis 彩色標籤</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="tbl-wrap"><table><tr><th>failure_diagnosis</th><th>顏色</th><th>含義</th><th>修正方向</th></tr><tr><td><code>cta_design</code></td><td><span class="pill pill-gold">黃</span></td><td>CTA 語句或類型問題</td><td>改 CTA 類型 / 降低承諾門檻</td></tr><tr><td><code>content_value</code></td><td><span class="pill pill-red">橘</span></td><td>內容本身價值不足</td><td>先修腳本，不要急著改 CTA</td></tr><tr><td><code>audience_mismatch</code></td><td><span class="pill pill-red">紅</span></td><td>受眾錯位</td><td>重做 Hook 受眾篩選</td></tr><tr><td><code>trust_gap</code></td><td><span class="pill pill-purple">紫</span></td><td>信任不足</td><td>增加 Stories / 案例 / 背景信任內容</td></tr><tr><td><code>offer_gap</code></td><td><span class="pill pill-blue">藍</span></td><td>引流品不夠吸引</td><td>重設 LFA / 模板 / 檢查表</td></tr><tr><td><code>timing</code></td><td><span class="pill">灰</span></td><td>CTA 出現時機錯誤</td><td>調整到中段 / 結尾 / Caption</td></tr></table></div><div class="code">cta_post_check = CTA 的「安全 + 成效」發布後診斷欄位，不是裝飾 metadata。</div></div></div>
+</section>
+
+<section class="page" id="page-history">
+  <div class="page-title">🗂 history_tracking v1.2</div><div class="page-sub">Algorithm Database v1.2 的最小追蹤欄位</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>最小必填欄位</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="code">{
+  "history_tracking": {
+    "platform": "youtube | instagram | facebook",
+    "publish_date": "YYYY-MM-DD",
+    "content_id": "",
+    "content_goal": "exposure | trust | education | engagement | dm | conversion",
+    "organic_viewers": 0,
+    "paid_viewers": 0,
+    "views": 0,
+    "ctr": null,
+    "retention_rate": null,
+    "watch_time": null,
+    "interactions": 0,
+    "sends_per_viewers": null,
+    "dm_count": 0,
+    "profile_visits": 0,
+    "not_interested_count": 0,
+    "cta_post_check": {},
+    "next_fix": ""
+  }
+}</div></div></div>
+  <div class="card"><div class="card-head" onclick="toggleCard(this)"><h3>平台特有欄位</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="code">youtube_specific: avd, apv, retention_dips, retention_spikes, rpm, cpm
+instagram_specific: sends_per_viewers, profile_visits, dm_count
+facebook_specific: page_feed_viewers, back_and_forth_replies, group_engagement</div></div></div>
+</section>
+
+<section class="page" id="page-timing">
+  <div class="page-title">⏱ Performance Review 時間節奏</div><div class="page-sub">不同指標穩定時間不同，過早解讀會造成錯誤決策</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>發布後追蹤節奏</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="tbl-wrap"><table><tr><th>時間點</th><th>看什麼</th><th>為什麼</th></tr><tr><td>發布後 48 小時</td><td>CTR / Stop Rate</td><td>初期波動大，過早看容易誤判</td></tr><tr><td>Day 2–3</td><td>Retention / Dips</td><td>數據較穩定，可找腳本掉點</td></tr><tr><td>Day 3–5</td><td>Viewers / Views / Interactions</td><td>觀察分發是否擴圈</td></tr><tr><td>Day 7</td><td>DM / Conversion / CTA Post-check</td><td>變現漏斗需要時間發酵</td></tr><tr><td>Day 14</td><td>RPM / CPM</td><td>收益數據通常更慢穩定</td></tr></table></div></div></div>
+  <div class="card"><div class="card-head" onclick="toggleCard(this)"><h3>每週 15 分鐘 Review</h3><span class="card-toggle">▼</span></div><div class="card-body"><ol><li>找出本週最明顯的 Retention Dip。</li><li>填 organic_viewers / dm_count / retention_rate。</li><li>選一個 failure_diagnosis。</li><li>寫下一個 next_fix。</li><li>下一支影片只測一個修改。</li></ol></div></div>
+</section>
+
+<section class="page" id="page-teaching">
+  <div class="page-title">🎓 教學驗收</div><div class="page-sub">Performance 章的目標不是看懂名詞，而是交出 Iteration Report</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>核心教學句</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="callout callout-gold"><b>數字會說話，但錯誤讀數字的人會被數字騙。</b></div></div></div>
+  <div class="card"><div class="card-head" onclick="toggleCard(this)"><h3>常見誤解</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="tbl-wrap"><table><tr><th>誤解</th><th>正確說法</th></tr><tr><td>Views 高 = 成功</td><td>還要看 retention / conversion</td></tr><tr><td>CTR 低 = 一定標題縮圖爛</td><td>可能是正常擴圈導致</td></tr><tr><td>留言多 = 互動好</td><td>要看是否機械式互動</td></tr><tr><td>廣告跑得好 = 內容好</td><td>Paid 與 Organic 必須分開</td></tr><tr><td>10 秒觀看率還能用</td><td>FB 10 秒指標已棄用，改看 retention / watch_time</td></tr></table></div></div></div>
+  <div class="card"><div class="card-head" onclick="toggleCard(this)"><h3>畢業作品｜Iteration Report</h3><span class="card-toggle">▼</span></div><div class="card-body"><ul><li>第一支影片：後台截圖、retention dip / CTR / viewers / DM、failure_diagnosis。</li><li>第二支影片：採用哪個修正、修改前後比較、下一步 Action Item。</li></ul></div></div>
+</section>
+
+
+<section class="page" id="page-glossary">
+  <div class="page-title">📘 名詞快查與表格閱讀法</div><div class="page-sub">給非專業使用者的白話說明：先懂欄位，再談診斷</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>怎麼讀這本手冊的表格？</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="explain"><b>閱讀順序：</b>先看「這張表的用意」→ 再看「白話意思」→ 最後才看 source_claim_level。不要一開始就被專業名詞卡住。</div><ol><li><b>表格用意：</b>這張表幫你做哪一種決策。</li><li><b>白話意思：</b>這個欄位到底在量什麼。</li><li><b>如何看：</b>數字變高或變低時，應該修哪裡。</li><li><b>可信度：</b>official 是官方定義；high_confidence 是高可信更新；practical_inference 是實務判斷，不可當官方規則。</li></ol></div></div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>Performance 常見名詞白話表</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="tbl-wrap"><table><tr><th>名詞</th><th>白話意思</th><th>用來判斷什麼</th><th>不要誤解成</th></tr><tr><td>CTR</td><td>看到標題 / 縮圖後，有多少人點進來。</td><td>入口包裝：標題、縮圖、題目是否吸引人。</td><td>CTR 高不等於影片好；還要看 Retention。</td></tr><tr><td>Stop Rate</td><td>短影音前 1–3 秒讓人停下來的能力。</td><td>Hook、第一句話、第一個畫面是否有效。</td><td>不是觀看總數。</td></tr><tr><td>Retention Rate</td><td>觀眾平均看了影片多少比例。</td><td>腳本節奏、資訊密度、內容是否有兌現承諾。</td><td>不是互動率。</td></tr><tr><td>AVD</td><td>Average View Duration，平均觀看時長。</td><td>YouTube 長影片內容是否留得住人。</td><td>不是總觀看時間。</td></tr><tr><td>APV</td><td>Average Percentage Viewed，平均觀看比例。</td><td>不同長度影片之間較好比較的留存比例。</td><td>不是點擊率。</td></tr><tr><td>Viewers</td><td>不重複觀眾數，同一帳號多次觀看仍算 1。</td><td>看實際觸及多少人。</td><td>不是播放次數。</td></tr><tr><td>Views</td><td>總觀看 / 播放次數，可能含重播。</td><td>看播放量、重看、擴散量。</td><td>Views 高不等於轉化好。</td></tr><tr><td>Interactions</td><td>主動互動，如按讚、留言、分享、收藏。</td><td>看內容是否讓人願意行動。</td><td>留言多不等於互動好，要看是否真實。</td></tr><tr><td>DM Count</td><td>私訊數或明確轉化動作數。</td><td>看 CTA / Offer 是否帶人進下一步。</td><td>不是官方推播權重。</td></tr><tr><td>Organic</td><td>自然流量，沒有靠廣告買來。</td><td>評估內容本身是否有效。</td><td>不要跟 Paid 混著判斷。</td></tr><tr><td>Paid</td><td>廣告投放帶來的流量。</td><td>評估廣告效益。</td><td>不要當成自然演算法成功。</td></tr><tr><td>Not Interested</td><td>觀眾表示不想看或負向回饋。</td><td>判斷受眾錯位、標題過度承諾、內容不匹配。</td><td>不是一般負評而已，要優先檢查。</td></tr></table></div></div></div>
+  <div class="card"><div class="card-head" onclick="toggleCard(this)"><h3>最小診斷口訣</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="grid"><div class="mini"><h4>入口低</h4><p>CTR / Stop Rate 低 → 先修 Hook、標題、縮圖、第一句。</p></div><div class="mini"><h4>留不住</h4><p>Retention / AVD 低 → 先修 Script，不要先怪 CTA。</p></div><div class="mini"><h4>有看沒行動</h4><p>Retention 高但 DM / Conversion 低 → 修 CTA、Trust、Offer。</p></div><div class="mini"><h4>數字怪</h4><p>先檢查 Paid / Organic 是否分開，再下結論。</p></div></div></div></div>
+</section>
+
+<section class="page" id="page-toolmap">
+  <div class="page-title">🧩 Screenwriter / v6.5 對接</div><div class="page-sub">Performance 不新增獨立工具，優先擴充 v6.5 History Tab</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>Screenwriter 輸出 AK Algorithm JSON</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="code">{
+  "history_tracking_schema": "v1.2",
+  "content_goal": "",
+  "cta_check": {},
+  "cta_platform_fit": {},
+  "cta_post_check_template": {},
+  "performance_expectation": {
+    "expected_action": "comment | dm | save | watch_next | click",
+    "primary_metric_to_watch": "retention_rate | ctr | dm_count | sends_per_viewers"
+  }
+}</div></div></div>
+  <div class="card"><div class="card-head" onclick="toggleCard(this)"><h3>v6.5 History Tab 建議</h3><span class="card-toggle">▼</span></div><div class="card-body"><p>每條 History 右側新增「📊 追蹤」按鈕，點開後三層：</p><div class="grid"><div class="mini"><h4>頂層：基本參數</h4><p>platform、publish_date、Organic / Paid 切換。</p></div><div class="mini"><h4>中層：KPI 快速填入</h4><p>viewers、retention_rate、ctr、dm_count。</p></div><div class="mini"><h4>底層：診斷與下一步</h4><p>failure_diagnosis 彩色下拉、next_fix。</p></div></div><div class="callout callout-info">7 天後可加入輕量提醒：此內容發布已滿 7 天，是否回填 Performance 數據？</div></div></div>
+</section>
+
+<section class="page" id="page-about">
+  <div class="page-title">📋 版本裁決</div><div class="page-sub">AK Performance Manual v1.0.3｜主工具入口版</div>
+  <div class="card open"><div class="card-head" onclick="toggleCard(this)"><h3>定位</h3><span class="card-toggle">▼</span></div><div class="card-body"><div class="code">AK_Performance_Manual_v1_0_3.html
+= Ch9 Performance 的正式教學與數據診斷工具
+= Algorithm v1.2 + CTA post-check + v6.5 History 的閉環連接層</div></div></div>
+  <div class="card"><div class="card-head" onclick="toggleCard(this)"><h3>待補查與降級項目</h3><span class="card-toggle">▼</span></div><div class="card-body"><ul><li>Meta 2026 指標大改目前 high_confidence，待補 Meta 官方原文。</li><li>Retention benchmark 只能作參考，不可當硬性門檻。</li><li>48 小時 / 7 天 / 14 天時間節奏屬 first_party_framework / practical_inference。</li><li>Not interested 對帳號長期權重的具體影響程度不可誇大成確定公式。</li><li>Paid 停止後需等待 7 天屬 practical_inference。</li><li>v6.5 7 天提醒是工具設計，不是平台規則。</li></ul></div></div>
+</section>
+
+</main>
+</div>
+<script>
+const pages = ['diagnose','quick','sources','meta','metrics','matrix','loop','cta','history','timing','teaching','glossary','toolmap','about'];
+function nav(id){pages.forEach(p=>{document.getElementById('page-'+p).classList.toggle('active',p===id);const b=document.getElementById('nb-'+p);if(b)b.classList.toggle('active',p===id)});window.scrollTo({top:0,behavior:'smooth'});}
+function toggleCard(el){el.parentElement.classList.toggle('open');}
+function num(id){const v=parseFloat(document.getElementById(id).value);return Number.isFinite(v)?v:null;}
+function fillDiag(type){ if(type==='good'){diagCtr.value=6.2;diagRetention.value=47;diagViewers.value=3800;diagDm.value=45;diagPaid.value='no';diagNeg.value='no';} else {diagCtr.value=9.8;diagRetention.value=14;diagViewers.value=5200;diagDm.value=1;diagPaid.value='no';diagNeg.value='yes';} }
+function diagnosePerformance(){
+  const ctr=num('diagCtr'), ret=num('diagRetention'), viewers=num('diagViewers'), dm=num('diagDm');
+  const paid=document.getElementById('diagPaid').value, neg=document.getElementById('diagNeg').value, platform=document.getElementById('diagPlatform').value;
+  let severity='pass', title='PASS｜數據結構健康', notes=[], diagnosis=[], next=[];
+  if(paid==='yes'){severity='warn';notes.push('Paid 有投放：必須分開記錄 organic_viewers 與 paid_viewers。Meta Business Suite Insights 概覽只顯示 Organic，Paid 需到其他介面查看。');}
+  if(neg==='yes'){severity='fail';diagnosis.push('Not interested / 負向訊號偏高：優先檢查受眾錯位或包裝誤導。');next.push('重做 Hook 承諾與受眾篩選，避免 clickbait 或錯誤受眾。');}
+  if(ctr!==null && ret!==null){
+    const highCtr=ctr>=5, lowCtr=ctr<2.5, highRet=ret>=35, lowRet=ret<20;
+    if(highCtr && highRet){diagnosis.push('高 CTR + 高 Retention：包裝與內容兌現度佳。');next.push('可複製題材結構，擴寫同類內容。');}
+    else if(highCtr && lowRet){severity='fail';title='FAIL｜高 CTR + 低 Retention';diagnosis.push('入口很強但內容未兌現，可能接近 clickbait。');next.push('修 Hook 與 Script 的承諾一致性，前 30 秒必須兌現標題承諾。');}
+    else if(lowCtr && highRet){severity=severity==='fail'?'fail':'warn';title='WARNING｜低 CTR + 高 Retention';diagnosis.push('內容可能有價值，但標題 / 封面 / 主題包裝弱。');next.push('優先改標題、縮圖、描述前兩行，不要急著重寫整支影片。');}
+    else if(lowCtr && lowRet){severity='fail';title='FAIL｜低 CTR + 低 Retention';diagnosis.push('選題與腳本可能雙重失敗。');next.push('回到 Signal / Strategy / Script 重新設計。');}
+    else {diagnosis.push('CTR 與 Retention 未出現極端衝突，請搭配 DM / Conversion 判斷。');}
+  }
+  if(viewers!==null && viewers<100){severity=severity==='fail'?'fail':'warn';notes.push('樣本數偏小：單支影片不足以否定整個方向。建議累積更多 viewers 後再裁決。');}
+  if(dm!==null && viewers!==null && viewers>0){ const rate=dm/viewers*100; if(rate<0.2){severity=severity==='fail'?'fail':'warn';diagnosis.push('DM / viewers 偏低：可能是 CTA、trust_gap 或 offer_gap。');next.push('進入 cta_post_check，選 failure_diagnosis：cta_design / trust_gap / offer_gap / audience_mismatch。');} else {diagnosis.push('DM 轉化有基本訊號，可追蹤私訊品質與成交率。');}}
+  if(platform==='facebook'){notes.push('Facebook：10 秒影片指標已棄用，改看 retention_rate + watch_time。');}
+  const cls = severity==='fail'?'fail':(severity==='warn'?'warn':'pass');
+  const res=document.getElementById('diagResult'); res.style.display='block'; res.className='result '+cls;
+  res.innerHTML=`<b>${title}</b><div class="sep"></div><div><span class="pill ${cls==='fail'?'pill-red':cls==='warn'?'pill-gold':'pill-green'}">${severity.toUpperCase()}</span></div><h4 class="mt8">診斷</h4><ul>${diagnosis.map(x=>`<li>${x}</li>`).join('')||'<li>尚不足以診斷，請補 CTR / Retention / Viewers / DM。</li>'}</ul><h4 class="mt8">下一步</h4><ul>${next.map(x=>`<li>${x}</li>`).join('')||'<li>維持觀察，下一支只測一個變數。</li>'}</ul>${notes.length?`<h4 class="mt8">注意</h4><ul>${notes.map(x=>`<li>${x}</li>`).join('')}</ul>`:''}`;
+}
+</script>
+</body>
+</html>
